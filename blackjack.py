@@ -10,11 +10,9 @@ class BlackjackGame:
     def new_game(self):
         self.player = []
         self.dealer = []
-        self.deck = BlackjackGame.gen_deck()
+        self.deck = gen_deck()
         self.state = 'ongoing'
         self.draw()
-        #if state != 'ongoing':
-        #    return
         self.draw()
         
     def get_card(self):
@@ -31,7 +29,7 @@ class BlackjackGame:
     
     def ignore(self):
         if get_hand_value(self.dealer) < 17:
-            dealer.append(self.get_card())
+            self.dealer.append(self.get_card())
             self.reeval_state()
         else:
             player_value = get_hand_value(self.player)
@@ -51,23 +49,6 @@ class BlackjackGame:
     
     def get_state(self):
         return self.state
-    
-    def gen_deck():
-        deck = [face + suit for face in BlackjackGame.faces for suit in BlackjackGame.suits]
-        shuffle(deck)
-        return deck
-    
-    def get_card_value(card):
-        if card.isdigit():
-            if card[0] == '1':
-                return int(card[:2])
-            else:
-                return int(card[0])
-        else:
-            if card[0] == 'A':
-                return 11
-            else:
-                return 10
 
     def reeval_state(self):
         player_value = get_hand_value(self.player)
@@ -81,3 +62,20 @@ class BlackjackGame:
             
 def get_hand_value(hand):
     return sum(map(get_card_value, hand))
+
+def get_card_value(card):
+    if card[0].isdigit():
+        if card[0] == '1':
+            return int(card[:2])
+        else:
+            return int(card[0])
+    else:
+        if card[0] == 'A':
+            return 11
+        else:
+            return 10
+
+def gen_deck():
+    deck = [face + suit for face in BlackjackGame.faces for suit in BlackjackGame.suits]
+    shuffle(deck)
+    return deck
