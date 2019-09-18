@@ -10,7 +10,7 @@ class BlackjackGame:
     def new_game(self):
         self.player = []
         self.dealer = []
-        self.deck = gen_deck()
+        self.deck = BlackjackGame.gen_deck()
         self.state = 'ongoing'
         self.draw()
         #if state != 'ongoing':
@@ -18,12 +18,12 @@ class BlackjackGame:
         self.draw()
         
     def get_card(self):
-        card = deck[-1]
-        deck.pop()
+        card = self.deck[-1]
+        self.deck.pop()
         return card
         
     def draw(self):
-        player.append(self.get_card())
+        self.player.append(self.get_card())
         self.reeval_state()
         if self.state != 'ongoing':
             return
@@ -40,7 +40,7 @@ class BlackjackGame:
                 self.state = 'dealerwin'
             elif player_value == dealer_value:
                 self.state = 'draw'
-            else
+            else:
                 self.state = 'playerwin'
     
     def get_dealer_hand(self):
@@ -68,10 +68,7 @@ class BlackjackGame:
                 return 11
             else:
                 return 10
-            
-    def get_hand_value(hand):
-        return sum(map(get_card_value, hand))
-    
+
     def reeval_state(self):
         player_value = get_hand_value(self.player)
         dealer_value = get_hand_value(self.dealer)
@@ -81,5 +78,6 @@ class BlackjackGame:
             self.state = 'dealerwin'
         elif dealer_value > 21:
             self.state = 'playerwin'
-        
-        
+            
+def get_hand_value(hand):
+    return sum(map(get_card_value, hand))
