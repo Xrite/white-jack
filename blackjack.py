@@ -1,3 +1,5 @@
+from random import shuffle
+
 class BlackjackGame:
     suits = ['♦', '♣', '♥', '♠']
     faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
@@ -10,12 +12,12 @@ class BlackjackGame:
         self.dealer = []
         self.deck = gen_deck()
         self.state = 'ongoing'
-        # TODO: starting draw
+        
         
     def draw(self):
-        pass
+        
     
-    def pass(self):
+    def fuck(self):
         pass
     
     def get_dealer_hand(self):
@@ -28,7 +30,9 @@ class BlackjackGame:
         return self.state
     
     def gen_deck():
-        pass
+        deck = [face + suit for face in BlackjackGame.faces for suit in BlackjackGame.suits]
+        shuffle(deck)
+        return deck
     
     def get_card_value(card):
         if card.isdigit():
@@ -43,5 +47,4 @@ class BlackjackGame:
                 return 10
             
     def get_hand_value(hand):
-        pass
-        
+        return sum(map(get_card_value, hand))
