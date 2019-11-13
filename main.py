@@ -3,16 +3,13 @@ from tkinter import messagebox
 
 from blackjack import BlackjackGame
 
-
 def callback(player_num, player_hand, current, states):
     user_cards_vars[player_num].set("Your cards: {0}".format(' '.join(map(str, cards))))
 
 root = tk.Tk()
-
 num_players = 3
 game = BlackjackGame(num_players, callback)
 user_cards_vars = [None for i in range(num_players)]
-
 
 for i in range(num_players):
     window = tk.Toplevel()
@@ -36,5 +33,5 @@ for i in range(num_players):
 
     pass_btn.pack()
     draw_btn.pack()
-
+    
 root.mainloop()
