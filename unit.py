@@ -24,6 +24,12 @@ class TestCards(unittest.TestCase):
         with self.assertRaises(ValueError):
             Card('clubs', "A")
 
+    def card_str_is_correct(self):
+        self.assertEqual('♥2', Card('♥', '2'))
+
+    def card_str_face_10_is_correct(self):
+        self.assertEqual('♥10', Card('♥', '10'))
+
 
 if __name__ == '__main__':
     unittest.main()
