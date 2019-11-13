@@ -9,19 +9,11 @@ def refresh(game, user_cards_var, dealer_cards_var):
 
 def check_state(game):
     global root
-    if game.get_state() == "ongoing":
+    if game.get_state() == GameState.ongoing:
         return
-    elif game.get_state() == "dealerwin":
-        messagebox.showinfo("Dealer win", "Lol")
-        root.destroy()
-    elif game.get_state() == "playerwin":
-        messagebox.showinfo("Player win", "Lol")
-        root.destroy()
-    elif game.get_state() == "draw":
-        messagebox.showinfo("Draw", "Lol")
-        root.destroy()
     else:
-        raise ValueError("Unexpected state")
+        messagebox.showinfo(game.get_state().name, "Lol")
+        root.destroy()
 
 def pass_onclick(game, user_cards_var, dealer_cards_var):
     game.ignore()
