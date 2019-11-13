@@ -1,5 +1,14 @@
 from random import shuffle
 from card import gen_deck, Card
+from enum import Enum
+
+class GameState(Enum):
+    ongoing = 'ongoing'
+    dealerwin = 'dealerwin'
+    draw = 'draw'
+    win = 'playerwin'
+
+
 
 class BlackjackGame:
     blackjack = 21
@@ -14,7 +23,7 @@ class BlackjackGame:
         self.dealer = []
         self.current_player
         self.deck = gen_deck()
-        self.states = 'ongoing'
+        self.states = GameState.ongoing
         self.draw() # TODO
         self.draw()
         
@@ -26,7 +35,7 @@ class BlackjackGame:
     def draw(self):
         self.player.append(self.get_card())
         self.reeval_state()
-        if self.state != 'ongoing':
+        if self.state != GameState.ongoing:
             return
         self.ignore()
     
@@ -38,11 +47,11 @@ class BlackjackGame:
             player_value = get_hand_value(self.player)
             dealer_value = get_hand_value(self.dealer)
             if player_value < dealer_value:
-                self.state = 'dealerwin'
+                self.state = GameState.dealerwin
             elif player_value == dealer_value:
-                self.state = 'draw'
+                self.state = GameState.draw
             else:
-                self.state = 'playerwin'
+                self.state = GameState.win
     
     def get_hands(self):
         return (self.hands, self.dealer)
@@ -57,11 +66,11 @@ class BlackjackGame:
         player_value = get_hand_value(self.player)
         dealer_value = get_hand_value(self.dealer)
         if player_value == 21:
-            self.state = 'playerwin'
+            self.state = GameState.win
         elif player_value > 21:
-            self.state = 'dealerwin'
+            self.state = GameState.dealerwin
         elif dealer_value > 21:
-            self.state = 'playerwin'
+            self.state = GameState.win
             
 def get_hand_value(hand):
     return sum(map(get_card_value, hand))

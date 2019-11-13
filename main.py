@@ -9,15 +9,15 @@ def refresh(game, user_cards_var, dealer_cards_var):
 
 def check_state(game):
     global root
-    if game.get_state() == "ongoing":
+    if game.get_state() == GameState.ongoing:
         return
-    elif game.get_state() == "dealerwin":
+    elif game.get_state() == GameState.dealerwin:
         messagebox.showinfo("Dealer win", "Lol")
         root.destroy()
-    elif game.get_state() == "playerwin":
+    elif game.get_state() == GameState.playerwin:
         messagebox.showinfo("Player win", "Lol")
         root.destroy()
-    elif game.get_state() == "draw":
+    elif game.get_state() == GameState.draw:
         messagebox.showinfo("Draw", "Lol")
         root.destroy()
     else:
