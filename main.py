@@ -4,7 +4,13 @@ from tkinter import messagebox
 from blackjack import BlackjackGame
 
 def callback(player_num, player_hand, current, states):
-    user_cards_vars[player_num].set("Your cards: {0}".format(' '.join(map(str, cards))))
+    user_cards_vars[player_num].set("Your cards: {0}".format(' '.join(map(str, player_hand))))
+    
+def draw(player_num):
+    return lambda e: game.draw(player_num)
+    
+def ignore(player_num):
+    return lambda e: game.ignore(player_num)
 
 root = tk.Tk()
 num_players = 3
@@ -21,9 +27,11 @@ for i in range(num_players):
     pass_btn = tk.Button(window, text="PASS", width=10, height=3, bg="lightgrey", fg="black")
     draw_btn = tk.Button(window, text="DRAW", width=10, height=3, bg="lightgrey", fg="black")
 
-    pass_btn.bind("<Button>", lambda event: game.ignore(i))
-    draw_btn.bind("<Button>", lambda event: game.draw(i))
+    j = i
 
+    pass_btn.bind("<Button>", ignore(j))
+    draw_btn.bind("<Button>", draw(j))
+    
     user_cards_vars[i] = tk.StringVar()
     user_cards_vars[i].set('Empty hand')
 

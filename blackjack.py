@@ -3,7 +3,7 @@ from card import gen_deck, Card
 from enum import Enum
 
 def get_hand_value(hand):
-    return sum(map(get_card_value, hand))
+    return sum(map(lambda c: c.value(), hand))
 
 class PlayerState(Enum):
     ongoing = 'ongoing'
@@ -36,18 +36,20 @@ class BlackjackGame:
         return card
     
     def _dispatch_callback(self, player_num):
-        self.callback(player_num, self.players[player_num], self.current_player, self.states)
+        self.callback(player_num, self.hands[player_num], self.current_player, self.states)
         
     def _dispatch_all(self):
-        for i in range(self.player_num):
+        for i in range(self.num_players):
             self._dispatch_callback(i)
         
     def draw(self, player_num):
+        print(player_num, self.current_player)
         if player_num != self.current_player:
             return #raise Exception()
+        print('a')
         card = self._get_card()
-        self.players[player_num].append(card)
-        self.reeval_state(player_num)
+        self.hands[player_num].append(card)
+        self._reeval_state(player_num)
         self._next()
         self._dispatch_all()
     
@@ -68,15 +70,15 @@ class BlackjackGame:
         self._dispatch_all()
         
     def dealer_move(self):
-        if get_hand_value(self.dealer) < dealer_bound:
-            self.dealer.append(self._get_card())
-            self.reeval_state(self.num_players)
+        if get_hand_value(self.hands[-1]) < BlackjackGame.dealer_bound:
+            self.hands[-1].append(self._get_card())
+            self._reeval_state(self.num_players)
     
     #def get_hands(self):
         #return (self.hands, self.dealer)
     
-    def get_current_player():
-        return self.current_player
+    #def get_current_player():
+        #return self.current_player
     
     def get_state(self, player_num=None):
         if player_num is None:
@@ -84,10 +86,10 @@ class BlackjackGame:
         return self.states[player_num]
 
     def _reeval_state(self, player_num):
-        player_values = get_hand_value(self.player)
-        if player_value == blackjack:
+        player_value = get_hand_value(self.hands[player_num])
+        if player_value == BlackjackGame.blackjack:
             self.states[player_num] = PlayerState.blackjack
-        elif player_value > blackjack:
+        elif player_value > BlackjackGame.blackjack:
             self.states[player_num] = PlayerState.busted
             if player_num == self.num_players:
                 self.game_state = GameState.dealer_busted
