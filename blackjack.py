@@ -1,5 +1,5 @@
 from random import shuffle
-from card import gen_deck
+from card import gen_deck, Card
 
 class BlackjackGame:
     blackjack = 21
