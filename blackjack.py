@@ -1,18 +1,21 @@
 from random import shuffle
+from card import gen_deck
 
 class BlackjackGame:
-    suits = ['♦', '♣', '♥', '♠']
-    faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A']
+    blackjack = 21
+    dealer_bound = 17
     
     def __init__(self):
         self.new_game()
         
-    def new_game(self):
-        self.player = []
+    def new_game(self, num_players):
+        self.num_players = num_players
+        self.hands = [[] for i in range(num_players)]
         self.dealer = []
+        self.current_player
         self.deck = gen_deck()
-        self.state = 'ongoing'
-        self.draw()
+        self.states = 'ongoing'
+        self.draw() # TODO
         self.draw()
         
     def get_card(self):
@@ -28,7 +31,7 @@ class BlackjackGame:
         self.ignore()
     
     def ignore(self):
-        if get_hand_value(self.dealer) < 17:
+        if get_hand_value(self.dealer) < dealer_bound:
             self.dealer.append(self.get_card())
             self.reeval_state()
         else:
@@ -41,14 +44,14 @@ class BlackjackGame:
             else:
                 self.state = 'playerwin'
     
-    def get_dealer_hand(self):
-        return self.dealer
+    def get_hands(self):
+        return (self.hands, self.dealer)
     
-    def get_player_hand(self):
-        return self.player
+    def get_current_player():
+        return self.current_player
     
-    def get_state(self):
-        return self.state
+    def get_state(self, player_num):
+        return self.states[player_num]
 
     def reeval_state(self):
         player_value = get_hand_value(self.player)
@@ -62,20 +65,3 @@ class BlackjackGame:
             
 def get_hand_value(hand):
     return sum(map(get_card_value, hand))
-
-def get_card_value(card):
-    if card[0].isdigit():
-        if card[0] == '1':
-            return int(card[:2])
-        else:
-            return int(card[0])
-    else:
-        if card[0] == 'A':
-            return 11
-        else:
-            return 10
-
-def gen_deck():
-    deck = [face + suit for face in BlackjackGame.faces for suit in BlackjackGame.suits]
-    shuffle(deck)
-    return deck
