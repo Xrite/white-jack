@@ -54,17 +54,17 @@ class BlackjackGame:
     #def get_hands(self):
         #return (self.hands, self.dealer)
     
-    def get_current_player():
-        return self.current_player
+    # def get_current_player():
+    #     return self.current_player
     
     def get_state(self, player_num):
         return self.states[player_num]
 
     def _reeval_state(self, player_num):
         player_values = get_hand_value(self.player)
-        if player_value == blackjack:
+        if player_value == BlackjackGame.blackjack:
             self.states[player_num] = PlayerState.blackjack
-        elif player_value > blackjack:
+        elif player_value > BlackjackGame.blackjack:
             self.states[player_num] = PlayerState.busted
             
 def get_hand_value(hand):
