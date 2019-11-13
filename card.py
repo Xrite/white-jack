@@ -5,8 +5,10 @@ class Card:
     FACES = ('2', '3', '4', '5', '6', '7', '8', '9', '10', 'J', 'Q', 'K', 'A')
 
     def __init__(self, suit, face):
-        assert suit in Card.SUITS
-        assert face in Card.FACES
+        if suit not in Card.SUITS:
+            raise ValueError("Unknown suit")
+        if face not in Card.FACES:
+            raise ValueError("Unknown face")
         self.suit = suit
         self.face = face
 
