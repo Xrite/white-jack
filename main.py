@@ -11,17 +11,9 @@ def check_state(game):
     global root
     if game.get_state() == GameState.ongoing:
         return
-    elif game.get_state() == GameState.dealerwin:
-        messagebox.showinfo("Dealer win", "Lol")
-        root.destroy()
-    elif game.get_state() == GameState.playerwin:
-        messagebox.showinfo("Player win", "Lol")
-        root.destroy()
-    elif game.get_state() == GameState.draw:
-        messagebox.showinfo("Draw", "Lol")
-        root.destroy()
     else:
-        raise ValueError("Unexpected state")
+        messagebox.showinfo(game.get_state().name, "Lol")
+        root.destroy()
 
 def pass_onclick(game, user_cards_var, dealer_cards_var):
     game.ignore()
