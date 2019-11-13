@@ -43,10 +43,8 @@ class BlackjackGame:
             self._dispatch_callback(i)
         
     def draw(self, player_num):
-        print(player_num, self.current_player)
         if player_num != self.current_player:
             return #raise Exception()
-        print('a')
         card = self._get_card()
         self.hands[player_num].append(card)
         self._reeval_state(player_num)
@@ -73,12 +71,6 @@ class BlackjackGame:
         if get_hand_value(self.hands[-1]) < BlackjackGame.dealer_bound:
             self.hands[-1].append(self._get_card())
             self._reeval_state(self.num_players)
-    
-    #def get_hands(self):
-        #return (self.hands, self.dealer)
-    
-    #def get_current_player():
-        #return self.current_player
     
     def get_state(self, player_num=None):
         if player_num is None:
