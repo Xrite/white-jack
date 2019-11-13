@@ -35,11 +35,11 @@ def draw_onclick(game, user_cards_var, dealer_cards_var):
 
 def get_user_cards(game):
     cards = game.get_player_hand()
-    return ' '.join(cards)
+    return ' '.join(map(str, cards))
 
 def get_dealer_cards(game):
     cards = game.get_dealer_hand()
-    return ' '.join(cards)
+    return ' '.join(map(str, cards))
 
 root = tk.Tk()
 
